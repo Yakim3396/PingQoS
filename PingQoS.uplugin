@@ -1,0 +1,23 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "PingQoS",
+	"Description": "For pings QoS beacons of PlayFab. Click the documentation to learn more, the section 'Quality-of-service beacons'.",
+	"Category": "Network",
+	"CreatedBy": "Dmitry Yakimenko aka Yakim3396",
+	"CreatedByURL": "https://github.com/Yakim3396",
+	"DocsURL": "https://docs.microsoft.com/en-us/gaming/playfab/features/multiplayer/servers/using-qos-beacons-to-measure-player-latency-to-azure#quality-of-service-beacons",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"IsBetaVersion": true,
+	"IsExperimentalVersion": true,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "PingQoS",
+			"Type": "Runtime",
+			"LoadingPhase": "PreDefault"
+		}
+	]
+}
