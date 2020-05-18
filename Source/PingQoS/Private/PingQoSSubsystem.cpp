@@ -17,6 +17,9 @@ void UPingQoSSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 	Super::Initialize(Collection);
 
 	UE_LOG(LogPingQoS, Log, TEXT("PingQoS subsystem initialized"));
+	
+	bIsCompleted = true;
+	Worker = nullptr;
 }
 
 void UPingQoSSubsystem::Deinitialize()
@@ -26,8 +29,8 @@ void UPingQoSSubsystem::Deinitialize()
 	if(!Worker) { return; }
 	Worker->Stop();
 	Worker->Exit();
-	Worker = nullptr;
 	delete Worker;
+	Worker = nullptr;
 }
 
 void UPingQoSSubsystem::Init(TArray<FPingQoSInfo> SetInfo)
@@ -38,7 +41,8 @@ void UPingQoSSubsystem::Init(TArray<FPingQoSInfo> SetInfo)
 
 bool UPingQoSSubsystem::Update()
 {
-	if(Worker) { return false; }
+	if(!bIsCompleted) { return false; }
+	bIsCompleted = false;
 	FTimespan ThreadWaitTime = FTimespan::FromMilliseconds(100);
 	Worker = new FPingQoSWorker(Infos, ThreadWaitTime, TEXT("thread_udp_receiver_ping"));
 	Worker->OnDataReceived().BindUObject(this, &UPingQoSSubsystem::Recv);
@@ -53,15 +57,15 @@ void UPingQoSSubsystem::Recv(TArray<FPingQoSInfo>& ResultInfos)
 		UE_LOG(LogTemp, Log, TEXT("Region : %s, result ping : %d"), *Info.Region, Info.Ping);
 	}
 
-	//Pass the reference to be used on gamethread
 	AsyncTask(ENamedThreads::GameThread, [&, ResultInfos]()
     {
         OnPingCompleted.Broadcast(ResultInfos);
     });
 	
 	UE_LOG(LogTemp, Log, TEXT("Finish! Destroy worker."));
+	bIsCompleted = true;
 	Worker->Stop();
 	Worker->Exit();
-	Worker = nullptr;
 	delete Worker;
+	Worker = nullptr;
 }

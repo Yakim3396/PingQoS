@@ -76,4 +76,6 @@ private:
 	class FPingQoSWorker* Worker;
 
 	TArray<FPingQoSInfo> Infos;
+
+	bool bIsCompleted;
 };
