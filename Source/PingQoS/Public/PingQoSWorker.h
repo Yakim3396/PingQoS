@@ -130,7 +130,10 @@ protected:
 		if(CurWaitTime >= 1)
 		{
 			UE_LOG(LogTemp, Log, TEXT("Timed out, end the stream"));
-			DataReceiveDelegate.ExecuteIfBound(Infos);
+			AsyncTask(ENamedThreads::GameThread, [&]()
+			{
+				DataReceiveDelegate.ExecuteIfBound(Infos);
+			});
 			return true;
 		}
 		return false;
