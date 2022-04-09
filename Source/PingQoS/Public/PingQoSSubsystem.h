@@ -8,7 +8,7 @@
 
 #include "PingQoSSubsystem.generated.h"
 
-inline bool operator==(const FPingQoSInfo& lhs, const FPingQoSInfo& rhs);
+bool operator==(const FPingQoSInfo& lhs, const FPingQoSInfo& rhs);
 
 USTRUCT(BlueprintType)
 struct PINGQOS_API FPingQoSInfo

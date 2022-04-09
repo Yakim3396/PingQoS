@@ -31,10 +31,10 @@ public:
 	*/
 	FPingQoSWorker(const TArray<FPingQoSInfo> NewServerInfos, const FTimespan& InboundPacketWaitTime, int32 NewPingTimeoutTime, const TCHAR* InThreadName)
 		: ServerInfosRequested(NewServerInfos)
+		, PingTimeoutTime(NewPingTimeoutTime)
 		, Stopping(false)
 		, Thread(nullptr)
 		, ThreadName(InThreadName)
-		, PingTimeoutTime(NewPingTimeoutTime)
 		, PacketWaitTime(InboundPacketWaitTime)
 	{
 		SocketSubsystem = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM);

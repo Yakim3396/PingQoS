@@ -9,7 +9,7 @@
 
 
 // Overload == for FPingQoSInfo. This is necessary for TArray comparisons
-inline bool operator==(const FPingQoSInfo& lhs, const FPingQoSInfo& rhs)
+bool operator==(const FPingQoSInfo& lhs, const FPingQoSInfo& rhs)
 {
 	return	lhs.URL == rhs.URL &&
 			lhs.IP == rhs.IP &&
